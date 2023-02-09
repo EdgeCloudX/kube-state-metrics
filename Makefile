@@ -1,5 +1,5 @@
 CGO_ENABLED:=0
-DOCKER_PLATFORMS=linux/amd64,linux/arm64
+DOCKER_PLATFORMS=linux/arm64,linux/amd64
 REGISTRY?=cloudx2021
 TAG?=v2.0.3
 IMAGE:=$(REGISTRY)/kube-state-metrics:$(TAG)
@@ -13,7 +13,8 @@ endif
 package:
 	go mod tidy
 	docker buildx create --use
-	docker buildx build --push --platform $(DOCKER_PLATFORMS) -t $(IMAGE) --build-arg BASEIMAGE=$(BASEIMAGE) .
+	docker buildx build  --platform $(DOCKER_PLATFORMS) -t $(IMAGE)  --push .
+	#docker buildx build  --platform=linux/arm64,linux/amd64 -t $(IMAGE) --push.
 
 build: $(PKG_SOURCES)
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GO111MODULE=on go build  -o kube-state-metrics

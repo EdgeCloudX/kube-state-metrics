@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-ARG BASEIMAGE
 
 FROM golang:1.19 as builder
 
@@ -27,8 +26,7 @@ COPY . /go/src/k8s.io/kube-state-metrics/
 WORKDIR /go/src/k8s.io/kube-state-metrics/
 RUN make build
 
-ARG BASEIMAGE
-FROM ${BASEIMAGE}
+FROM alpine:3.10
 RUN clean-install util-linux libsystemd0 bash systemd
 
 # Avoid symlink of /etc/localtime.
