@@ -27,7 +27,6 @@ WORKDIR /go/src/k8s.io/kube-state-metrics/
 RUN make build
 
 FROM alpine:3.10
-RUN clean-install util-linux libsystemd0 bash systemd
 
 # Avoid symlink of /etc/localtime.
 RUN test -h /etc/localtime && rm -f /etc/localtime && cp /usr/share/zoneinfo/UTC /etc/localtime || true
