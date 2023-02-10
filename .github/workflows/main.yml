@@ -7,10 +7,10 @@ env:
 on:
   pull_request:
     branches:
-      - ECX-*
+      - ecx-*
   push:
     branches:
-      - ECX-*
+      - ecs-*
 
 jobs:
   docker-image:
