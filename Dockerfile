@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+ARG BASEIMAGE
 FROM golang:1.19 as builder
 
 ENV GOPATH /gopath/
@@ -26,7 +26,8 @@ COPY . /go/src/k8s.io/kube-state-metrics/
 WORKDIR /go/src/k8s.io/kube-state-metrics/
 RUN make build
 
-FROM alpine:3.10
+ARG BASEIMAGE
+FROM ${BASEIMAGE}
 # Avoid symlink of /etc/localtime.
 RUN test -h /etc/localtime && rm -f /etc/localtime && cp /usr/share/zoneinfo/UTC /etc/localtime || true
 

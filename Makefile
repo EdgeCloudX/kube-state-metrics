@@ -12,7 +12,7 @@ endif
 package:
 	go mod tidy
 	docker buildx create --use
-	docker buildx build  --platform $(DOCKER_PLATFORMS) -t $(IMAGE)  --push .
+	docker buildx build  --platform $(DOCKER_PLATFORMS) -t $(IMAGE) --build-arg BASEIMAGE=$(BASEIMAGE)  --push .
 	#docker buildx build  --platform=linux/arm64,linux/amd64 -t $(IMAGE) --push.
 
 build: $(PKG_SOURCES)
