@@ -10,7 +10,7 @@ on:
       - ecx-*
   push:
     branches:
-      - ecs-*
+      - ecx-*
 
 jobs:
   docker-image:

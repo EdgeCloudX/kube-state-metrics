@@ -9,7 +9,6 @@ ifeq ($(ENABLE_JOURNALD), 1)
 	LOGCOUNTER=./bin/log-counter
 endif
 
-
 package:
 	go mod tidy
 	docker buildx create --use
