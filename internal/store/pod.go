@@ -620,18 +620,19 @@ var (
 			Type: metric.Gauge,
 			Help: "Describes the last reason the container was in terminated state.",
 			GenerateFunc: wrapPodFunc(func(p *v1.Pod) *metric.Family {
-				ms := make([]*metric.Metric, len(p.Status.ContainerStatuses)*len(containerTerminatedReasons))
+				ms := make([]*metric.Metric, 0)
 
-				for i, cs := range p.Status.ContainerStatuses {
-					for j, reason := range containerTerminatedReasons {
-						ms[i*len(containerTerminatedReasons)+j] = &metric.Metric{
-							LabelKeys:   []string{"container", "reason"},
-							LabelValues: []string{cs.Name, reason},
-							Value:       boolFloat64(lastTerminationReason(cs, reason)),
-						}
+				for _, cs := range p.Status.ContainerStatuses {
+					var value float64
+					if cs.State.Waiting != nil {
+						value = containerWaitingReasonsMap[cs.State.Waiting.Reason]
 					}
+					ms = append(ms, &metric.Metric{
+						LabelKeys:   []string{"container"},
+						LabelValues: []string{cs.Name},
+						Value:       value,
+					})
 				}
-
 				return &metric.Family{
 					Metrics: ms,
 				}
