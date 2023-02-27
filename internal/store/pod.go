@@ -44,6 +44,14 @@ var containerWaitingReasonsMap = map[string]float64{
 	"CreateContainerError":       6,
 	"InvalidImageName":           7,
 }
+var containerTerminatedMap = map[string]float64{
+	"Completed":          1,
+	"ContainerCannotRun": 2,
+	"DeadlineExceeded":   3,
+	"Error":              4,
+	"Evicted":            5,
+	"OOMKilled":          6,
+}
 var (
 	descPodLabelsDefaultLabels = []string{"namespace", "pod", "node_ip"}
 	containerWaitingReasons    = []string{"ContainerCreating", "CrashLoopBackOff", "CreateContainerConfigError", "ErrImagePull", "ImagePullBackOff", "CreateContainerError", "InvalidImageName"}
@@ -579,7 +587,7 @@ var (
 				for _, cs := range p.Status.ContainerStatuses {
 					var value float64
 					if cs.State.Waiting != nil {
-						value = containerWaitingReasonsMap[cs.State.Waiting.Reason]
+						value = containerTerminatedMap[cs.State.Waiting.Reason]
 					}
 					ms = append(ms, &metric.Metric{
 						LabelKeys:   []string{"container"},
@@ -625,7 +633,7 @@ var (
 				for _, cs := range p.Status.ContainerStatuses {
 					var value float64
 					if cs.State.Waiting != nil {
-						value = containerWaitingReasonsMap[cs.State.Waiting.Reason]
+						value = containerTerminatedMap[cs.State.Waiting.Reason]
 					}
 					ms = append(ms, &metric.Metric{
 						LabelKeys:   []string{"container"},
