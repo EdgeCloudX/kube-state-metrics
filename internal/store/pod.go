@@ -586,8 +586,8 @@ var (
 
 				for _, cs := range p.Status.ContainerStatuses {
 					var value float64
-					if cs.State.Waiting != nil {
-						value = containerTerminatedMap[cs.State.Waiting.Reason]
+					if cs.LastTerminationState.Terminated != nil {
+						value = containerTerminatedMap[cs.LastTerminationState.Terminated.Reason]
 					}
 					ms = append(ms, &metric.Metric{
 						LabelKeys:   []string{"container"},
@@ -632,8 +632,8 @@ var (
 
 				for _, cs := range p.Status.ContainerStatuses {
 					var value float64
-					if cs.State.Waiting != nil {
-						value = containerTerminatedMap[cs.State.Waiting.Reason]
+					if cs.LastTerminationState.Terminated != nil {
+						value = containerTerminatedMap[cs.LastTerminationState.Terminated.Reason]
 					}
 					ms = append(ms, &metric.Metric{
 						LabelKeys:   []string{"container"},
