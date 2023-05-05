@@ -26,7 +26,7 @@ CGO_ENABLED:=0
 DOCKER_PLATFORMS=linux/arm64,linux/amd64
 DOCKER_REGISTRY?=cloudx2021
 DOCKER_TAG?=v2.4.2
-DOCKER_IMAGE:=$(REGISTRY)/kube-state-metrics:$(TAG)
+DOCKER_IMAGE:=$(DOCKER_REGISTRY)/kube-state-metrics:$(TAG)
 ifeq ($(ENABLE_JOURNALD), 1)
 	CGO_ENABLED:=1
 	LOGCOUNTER=./bin/log-counter
