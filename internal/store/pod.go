@@ -292,7 +292,6 @@ var (
 						Metrics: []*metric.Metric{},
 					}
 				}
-
 				phases := []struct {
 					v bool
 					n string
@@ -1069,8 +1068,14 @@ func wrapPodFunc(f func(*v1.Pod) *metric.Family) func(interface{}) *metric.Famil
 		metricFamily := f(pod)
 
 		for _, m := range metricFamily.Metrics {
+			var hostIp string
+			if pod.Status.HostIP != "" {
+				hostIp = pod.Status.HostIP
+			} else {
+				hostIp = pod.Spec.NodeName
+			}
 			m.LabelKeys = append(descPodLabelsDefaultLabels, m.LabelKeys...)
-			m.LabelValues = append([]string{pod.Namespace, pod.Name, pod.Status.HostIP}, m.LabelValues...)
+			m.LabelValues = append([]string{pod.Namespace, pod.Name, hostIp}, m.LabelValues...)
 		}
 
 		return metricFamily
