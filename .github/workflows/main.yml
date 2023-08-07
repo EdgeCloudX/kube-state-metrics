@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.PRO_HARBOR_USERNAME }}
           password: ${{ secrets.PRO_HARBOR_TOKEN }}
       - name: Build & Push Docker image
-        run: make package
+        run: make package -d
   docker-image-develop:
     if: startsWith(github.ref_name, vars.DEV_BRANCH)
     env:
@@ -59,4 +59,4 @@ jobs:
           username: ${{ secrets.DEV_HARBOR_USERNAME }}
           password: ${{ secrets.DEV_HARBOR_TOKEN }}
       - name: Build & Push Docker image
-        run: make package
+        run: make package -d
