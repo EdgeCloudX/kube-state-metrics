@@ -1,6 +1,6 @@
 CGO_ENABLED:=0
 DOCKER_PLATFORMS=linux/arm64,linux/amd64
-REGISTRY?=registry.eecos.cn:7443/ecf-edge/coreos
+REGISTRY=registry.eecos.cn:7443/ecf-edge/coreos
 TAG?=2.0.8
 IMAGE:=$(REGISTRY)/kube-state-metrics:$(TAG)
 BASEIMAGE:=k8s.gcr.io/debian-base:v2.0.0
